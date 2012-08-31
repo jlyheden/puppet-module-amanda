@@ -1,3 +1,7 @@
+0.0.1 - stanlee/amanda - 2012/08/31
+
+  Added lsbdistcode fact check in amanda::params because osfamily didn't exist in facter 1.5.6
+
 0.1.4 - pdxcat/amanda - 2012/05/19
 
   ******* Update CHANGELOG for 0.1.4 patch
