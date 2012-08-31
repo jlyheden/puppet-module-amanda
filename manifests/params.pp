@@ -114,25 +114,52 @@ class amanda::params {
       ]
     }
     default:   {
-      $configs_directory      = '/etc/amanda'
-      $homedir                = '/var/lib/amanda'
-      $uid                    = '59500'
-      $user                   = 'amandabackup'
-      $comment                = 'Amanda backup user'
-      $shell                  = '/bin/sh'
-      $group                  = 'backup'
-      $groups                 = [ ]
-      $xinetd_unsupported     = true
-      $client_package         = 'amanda-client'
-      $server_package         = 'amanda-server'
-      $server_provides_client = false # idunno
-      $amandad_path           = '/usr/libexec/amanda/amandad'
-      $amandaidx_path         = '/usr/libexec/amanda/amindexd'
-      $amandataped_path       = '/usr/libexec/amanda/amidxtaped'
-      $amanda_directories     = [
-        '/tmp/amanda',
-        '/tmp/amanda/amandad',
-      ]
+      case $::lsbdistid {
+        Ubuntu: {
+          $configs_directory      = '/etc/amanda'
+          $homedir                = '/var/backups'
+          $uid                    = '34'
+          $user                   = 'backup'
+          $comment                = 'backup'
+          $shell                  = '/bin/sh'
+          $group                  = 'backup'
+          $groups                 = [ 'tape' ]
+          $client_package         = 'amanda-client'
+          $server_package         = 'amanda-server'
+          $server_provides_client = false
+          $amandad_path           = '/usr/lib/amanda/amandad'
+          $amandaidx_path         = '/usr/lib/amanda/amindexd'
+          $amandataped_path       = '/usr/lib/amanda/amidxtaped'
+          $amanda_directories     = [
+            '/tmp/amanda',
+            '/tmp/amanda/amandad',
+            '/var/amanda',
+            '/var/amanda/gnutar-lists',
+            '/var/log/amanda',
+          ]
+        }
+        default: {
+          $configs_directory      = '/etc/amanda'
+          $homedir                = '/var/lib/amanda'
+          $uid                    = '59500'
+          $user                   = 'amandabackup'
+          $comment                = 'Amanda backup user'
+          $shell                  = '/bin/sh'
+          $group                  = 'backup'
+          $groups                 = [ ]
+          $xinetd_unsupported     = true
+          $client_package         = 'amanda-client'
+          $server_package         = 'amanda-server'
+          $server_provides_client = false # idunno
+          $amandad_path           = '/usr/libexec/amanda/amandad'
+          $amandaidx_path         = '/usr/libexec/amanda/amindexd'
+          $amandataped_path       = '/usr/libexec/amanda/amidxtaped'
+          $amanda_directories     = [
+            '/tmp/amanda',
+            '/tmp/amanda/amandad',
+          ]
+        }
+      }
     }
   }
 
