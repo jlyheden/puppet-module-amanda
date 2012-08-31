@@ -79,6 +79,7 @@ class amanda::virtual {
   }
 
   @concat { "${amanda::params::homedir}/.amandahosts":
+    path    => "${amanda::params::homedir}/.amandahosts",
     owner   => $amanda::params::user,
     group   => $amanda::params::group,
     mode    => '0600',
