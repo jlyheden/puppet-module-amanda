@@ -2,6 +2,12 @@ class amanda::virtual {
   include concat::setup
   include amanda::params
 
+  if defined(Class['amanda::client']) {
+    $ensure = $amanda::client::ensure
+  } else {
+    $ensure = $amanda::server::ensure
+  }
+
   case $::operatingsystem {
     'Solaris': { include amanda::virtual::solaris }
     default:   { } # do nothing
@@ -69,10 +75,12 @@ class amanda::virtual {
     }
   } else {
     @package { 'amanda/client':
+      ensure => $ensure,
       name   => $amanda::params::client_package,
       before => $post_package,
     }
     @package { 'amanda/server':
+      ensure => $ensure,
       name   => $amanda::params::server_package,
       before => $post_package,
     }
@@ -87,6 +95,7 @@ class amanda::virtual {
   }
 
   Xinetd::Service {
+    ensure  => $ensure,
     require => [
       User[$amanda::params::user],
       $post_package,
@@ -102,6 +111,7 @@ class amanda::virtual {
     group        => $amanda::params::group,
     server       => $amanda::params::amandad_path,
     server_args  => "-auth=bsd ${amanda::params::client_daemons}",
+    only_from    => $amanda::client::server,
   }
   @xinetd::service { 'amanda_tcp':
     service_name => 'amanda',
@@ -112,6 +122,7 @@ class amanda::virtual {
     group        => $amanda::params::group,
     server       => $amanda::params::amandad_path,
     server_args  => "-auth=bsdtcp ${amanda::params::client_daemons}",
+    only_from    => $amanda::client::server,
   }
   @xinetd::service { 'amanda_indexd':
     service_name => 'amandaidx',

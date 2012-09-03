@@ -123,16 +123,17 @@ class amanda::params {
             $user                 = 'amandabackup'
             $client_package       = 'amanda-backup-client'
             $server_package       = 'amanda-backup-server'
+            $groups                 = [ 'disk', 'tape' ]
           } else {
             $uid                  = '34'
             $user                 = 'backup'
             $client_package       = 'amanda-client'
             $server_package       = 'amanda-server'
+            $groups                 = [ 'tape' ]
           }
           $group                = 'backup'
           $comment                = 'backup'
           $shell                  = '/bin/sh'
-          $groups                 = [ 'tape' ]
           $server_provides_client = false
           $amandad_path           = '/usr/lib/amanda/amandad'
           $amandaidx_path         = '/usr/lib/amanda/amindexd'

@@ -1,4 +1,5 @@
 class amanda::server (
+  $ensure                   = 'present',
   $configs                  = [],
   $configs_directory        = undef,
   $manage_configs_directory = true,
@@ -7,7 +8,7 @@ class amanda::server (
   $group                    = undef,
   $owner                    = undef,
   $xinetd                   = true,
-  $official_packages        = true
+  $official_packages        = false
 ) {
   include amanda
   include amanda::params
@@ -48,12 +49,13 @@ class amanda::server (
   }
 
   amanda::amandahosts { 'amanda::server::server_root@localhost':
+    ensure  => $ensure,
     content => 'localhost root amindexd amidxtaped',
     order   => '10';
   }
 
   amanda::config { $configs:
-    ensure                   => present,
+    ensure                   => $ensure,
     manage_configs_directory => $manage_configs_directory,
     configs_directory        => $configs_directory,
     configs_source           => $configs_source,

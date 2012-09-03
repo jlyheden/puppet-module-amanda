@@ -1,4 +1,5 @@
 class amanda::client (
+  $ensure      = 'present',
   $remote_user = undef,
   $server      = "backup.$::domain",
   $xinetd      = true,
