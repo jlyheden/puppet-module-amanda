@@ -117,27 +117,28 @@ class amanda::params {
       case $::lsbdistid {
         Ubuntu: {
           $configs_directory      = '/etc/amanda'
-          $homedir                = '/var/backups'
           if $amanda::server::official_packages == true or $amanda::client::official_packages == true {
+            $homedir              = '/var/lib/amanda'
             $uid                  = '59500'
             $user                 = 'amandabackup'
             $client_package       = 'amanda-backup-client'
             $server_package       = 'amanda-backup-server'
-            $groups                 = [ 'disk', 'tape' ]
-            $amandad_path           = '/usr/libexec/amanda/amandad'
-            $amandaidx_path         = '/usr/libexec/amanda/amindexd'
-            $amandataped_path       = '/usr/libexec/amanda/amidxtaped'
+            $groups               = [ 'disk', 'tape' ]
+            $amandad_path         = '/usr/libexec/amanda/amandad'
+            $amandaidx_path       = '/usr/libexec/amanda/amindexd'
+            $amandataped_path     = '/usr/libexec/amanda/amidxtaped'
           } else {
+            $homedir              = '/var/backups'
             $uid                  = '34'
             $user                 = 'backup'
             $client_package       = 'amanda-client'
             $server_package       = 'amanda-server'
-            $groups                 = [ 'tape' ]
-            $amandad_path           = '/usr/lib/amanda/amandad'
-            $amandaidx_path         = '/usr/lib/amanda/amindexd'
-            $amandataped_path       = '/usr/lib/amanda/amidxtaped'
+            $groups               = [ 'tape' ]
+            $amandad_path         = '/usr/lib/amanda/amandad'
+            $amandaidx_path       = '/usr/lib/amanda/amindexd'
+            $amandataped_path     = '/usr/lib/amanda/amidxtaped'
           }
-          $group                = 'backup'
+          $group                  = 'backup'
           $comment                = 'backup'
           $shell                  = '/bin/sh'
           $server_provides_client = false
