@@ -6,7 +6,8 @@ class amanda::server (
   $mode                     = '0644',
   $group                    = undef,
   $owner                    = undef,
-  $xinetd                   = true
+  $xinetd                   = true,
+  $official_packages        = true
 ) {
   include amanda
   include amanda::params

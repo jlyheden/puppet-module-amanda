@@ -1,7 +1,8 @@
 class amanda::client (
   $remote_user = undef,
   $server      = "backup.$::domain",
-  $xinetd      = true
+  $xinetd      = true,
+  $official_packages = false
 ) {
   include amanda
   include amanda::params
