@@ -1,6 +1,5 @@
 define amanda::config (
   $ensure                   = present,
-  $config                   = $title,
   $configs_directory        = undef,
   $manage_configs_directory = true,
   $configs_source           = 'modules/amanda/server',
@@ -8,8 +7,12 @@ define amanda::config (
   $group                    = undef,
   $mode                     = '0644'
 ) {
+  # Workaround to support 2.6
+  $config = $::puppetversion ? {
+    /2\.6/ => $name,
+    default => $title
+  }
   include amanda::params
-
   if $configs_directory != undef {
     $configs_directory_real = $configs_directory
   } else {

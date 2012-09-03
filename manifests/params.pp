@@ -124,20 +124,23 @@ class amanda::params {
             $client_package       = 'amanda-backup-client'
             $server_package       = 'amanda-backup-server'
             $groups                 = [ 'disk', 'tape' ]
+            $amandad_path           = '/usr/libexec/amanda/amandad'
+            $amandaidx_path         = '/usr/libexec/amanda/amindexd'
+            $amandataped_path       = '/usr/libexec/amanda/amidxtaped'
           } else {
             $uid                  = '34'
             $user                 = 'backup'
             $client_package       = 'amanda-client'
             $server_package       = 'amanda-server'
             $groups                 = [ 'tape' ]
+            $amandad_path           = '/usr/lib/amanda/amandad'
+            $amandaidx_path         = '/usr/lib/amanda/amindexd'
+            $amandataped_path       = '/usr/lib/amanda/amidxtaped'
           }
           $group                = 'backup'
           $comment                = 'backup'
           $shell                  = '/bin/sh'
           $server_provides_client = false
-          $amandad_path           = '/usr/lib/amanda/amandad'
-          $amandaidx_path         = '/usr/lib/amanda/amindexd'
-          $amandataped_path       = '/usr/lib/amanda/amidxtaped'
           $amanda_directories     = [
             '/tmp/amanda',
             '/tmp/amanda/amandad',
