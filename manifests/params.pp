@@ -118,18 +118,18 @@ class amanda::params {
         Ubuntu: {
           $configs_directory      = '/etc/amanda'
           $homedir                = '/var/backups'
-          $uid                    = '34'
           if $amanda::server::official_packages == true or $amanda::client::official_packages == true {
+            $uid                  = '59500'
             $user                 = 'amandabackup'
-            $group                = 'amandabackup'
             $client_package       = 'amanda-backup-client'
             $server_package       = 'amanda-backup-server'
           } else {
+            $uid                  = '34'
             $user                 = 'backup'
-            $group                = 'backup'
             $client_package       = 'amanda-client'
             $server_package       = 'amanda-server'
           }
+          $group                = 'backup'
           $comment                = 'backup'
           $shell                  = '/bin/sh'
           $groups                 = [ 'tape' ]
